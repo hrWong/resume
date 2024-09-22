@@ -1,4 +1,60 @@
-# 一个简洁优雅的 XeLaTeX 简历模板
+本仓库 Fork 自 [billryan/resume: An elegant \LaTeX\ résumé template.](https://github.com/billryan/resume)
+
+原仓库已经多年没有更新了，我在使用其中文版本的时候遇到一些新的需求，也即本仓库所做的主要修改：
+- 支持 FontAwesome 6.6.0，新增几个基本信息
+- 修改了带图片的简历样式
+- 支持了多种标题行样式
+- 支持定义高亮色 `accentcolor`，命令 `\texthl{}`
+- 优化 PDF 目录生成：解决了乱码的问题，新增了 bookmark
+- 优化仓库文件组织结构
+- 优化 MakeFile
+
+使用：
+`make zh_CN`
+
+## 效果图
+![效果图](./images/resume_example.jpg)
+
+## 支持 FontAwesome 6.6.0
+
+- 目前直接在 [Font Awesome 官网](https://fontawesome.com/search) 已经无法直接搜索 4.6.3 版本的 icon 了，默认是搜索 6.6.0 版本的 icon
+- `./stys/create_fontawesome_sty.py` 源于此仓库：[gvgramazio/latex-fontawesome6: Bindings for FontAwesome 6 icons to be used in XeLaTeX.](https://github.com/gvgramazio/latex-fontawesome6)，在此基础上改了一些东西，这里其实还可以继续优化一下
+- `fonts/fontawesome` 文件夹源于 [Font Awesome 官网下载 6.6.0 Free For The Desktop](https://fontawesome.com/download)
+- 旧版本的相关文件都删了（可以兼容，但没必要）
+
+目前已经提供了简历所需的大部分 icon，但也可以修改或新增
+
+使用：
+1. 在 [Font Awesome Search](https://fontawesome.com/search) 搜索你想要的 icon，比如 thumbs
+2. 根据搜索结果，找到对应 icon 的名字，比如 thumbs-up
+3. 根据版本（Free/Brand or Pro）以及样式（是否 Solid），决定最终的代码，比如 `\faiconsixbf{thumbs-up}`（Free Solid）, `\faiconsix{thumbs-up}`（Free Regular）
+
+## 修改了带图片的简历样式
+通过在 `resume-zh_CN.tex` 中指定：
+- `\input{texs/header_with_photo}`
+- `\input{texs/header}`
+
+来选择是否带图片，注意带图片的话要使用 `graphicx` 包和 `tabularray` 包
+
+使用了 [tabularray](https://github.com/lvjr/tabularray) 包，要求 TexLive2021 及以上的版本
+
+## 支持了多种标题行样式
+通过 `resume-zh_CN.tex` 中的 `\settitlelinestyle{default}` 进行设置
+
+三种：
+1. `default`：标题行有下划线，无背景色，标题和下划线同色 `fgcolor`
+2. `partialbg`：标题行有下划线，标题内容部分有背景色 `bgcolor`，标题和下划线同色 `fgcolor`
+3. `fullbg`：标题行无下划线，标题行背景色 `bgcolor`，标题 `fgcolor`
+
+具体的颜色和样式可调，需要修改 `resume.cls` 文件
+
+## 其他修改
+- 支持定义高亮色 `accentcolor`，命令 `\texthl{}`
+- 优化 PDF 目录生成：解决了乱码的问题，新增了 bookmark
+- 优化仓库文件组织结构
+- 优化 MakeFile
+
+## **以下是原仓库的 README** 一个简洁优雅的 XeLaTeX 简历模板
 
 Hit branch [master](https://github.com/billryan/resume/tree/master) if you wanna an English résumé.
 
