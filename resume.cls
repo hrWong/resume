@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{resume}[2024/09/22 An elegant Résumé class]
-\LoadClass[11pt]{article}
+\LoadClass[10pt]{article}
 
 % disable indent globally
 \setlength{\parindent}{0pt}
@@ -40,19 +40,22 @@
 
 \RequirePackage[
 	a4paper,
-	left=0.80in,
-	right=0.80in,
-	top=0.85in, % tune this!
-	bottom=0.55in,
+	left=0.75in,
+	right=0.75in,
+	top=0.5in,
+	bottom=0.4in,
 	nohead
 ]{geometry}
+
+% 设置合理的行间距
+\linespread{1.1}
 
 \RequirePackage{titlesec}
 \RequirePackage{enumitem}
 \setlist{noitemsep} % removes spacing from items but leaves space around the whole list
 %\setlist{nosep} % removes all vertical spacing within and around the list
-\setlist[itemize]{topsep=0.25em, leftmargin=1.25pc}
-\setlist[enumerate]{topsep=0.25em, leftmargin=1.25pc}
+\setlist[itemize]{topsep=0.25em, leftmargin=1.2pc, itemsep=0.2em}
+\setlist[enumerate]{topsep=0.25em, leftmargin=1.2pc, itemsep=0.2em}
 \RequirePackage[super]{nth}
 
 \newcommand{\titlelinestyle}{default} % partialbg, fullbg
@@ -65,8 +68,8 @@
 
 \newcommand{\applyColorAndTitleStyle}{%
   \ifthenelse{\equal{\titlelinestyle}{default}}{%
-    \colorlet{fgcolor}{nwpubluebg} %
-    \colorlet{accentcolor}{nwpubluebg} %
+    \colorlet{fgcolor}{black} %
+    \colorlet{accentcolor}{black} %
     \titleformat{\section}         % Customise the \section command 
       {\Large\bfseries\raggedright\color{fgcolor}} % Make the \section headers large (\Large),
                                    % small capitals (\scshape) -> bold font (\bfseries),
@@ -78,7 +81,7 @@
       % REF: https://tex.stackexchange.com/a/40089
   }{%
     \colorlet{bgcolor}{cyanbg}
-    \colorlet{fgcolor}{cyanfg}
+    \colorlet{fgcolor}{black}
     \colorlet{accentcolor}{black}
     \ifthenelse{\equal{\titlelinestyle}{partialbg}}{%
       \titleformat{\section}
@@ -100,13 +103,13 @@
 }
 \AtBeginDocument{\applyColorAndTitleStyle}
 
-\titlespacing*{\section}{0cm}{*1.8}{*1.8}
+\titlespacing*{\section}{0cm}{*1.5}{*1.5}
 
 \titleformat{\subsection}
-  {\large\raggedright}
+  {\large\raggedright\color{black}}
   {}{0em}
   {}
-\titlespacing*{\subsection}{0cm}{*1.8}{*0.6}
+\titlespacing*{\subsection}{0cm}{*1.2}{*0.8}
 
 \newcommand{\datedsection}[2]{%
   \section[#1]{#1 \hfill #2}%
@@ -120,7 +123,7 @@
 
 \newcommand{\name}[1]{
   \centerline{\Huge\bfseries{#1}}
-  \vspace{1.5ex}
+  \vspace{1.3ex}
 }
 
 % defines one's name
@@ -152,6 +155,64 @@
             % 可以试试 makebox 置顶放 + tallphantom
             % {\colorbox{bgcolor}{\makebox[\textwidth - 6pt][l]{\icon{#2} #1}\strut\tallphantom{16pt}}}%
             {\colorbox{bgcolor}{\makebox[\textwidth - 6pt][l]{\icon{#2} #1}}}% 标题整行背景色 不要加下划线
+            {#1}%
+        }%
+      }{%
+          \PackageError{resume}{Invalid value for titlelinestyle: \titlelinestyle}{}
+      }%
+    }
+  }
+}
+
+% Subsection Title
+\newcommand*{\subsectionTitle}[2]{%
+  \ifthenelse{\equal{\titlelinestyle}{default}}{%
+    \subsection{%
+      \texorpdfstring%
+        {\icon{#2} #1}% 标题无背景色 无下划线
+        {#1}%
+    }%
+  }{%
+    \ifthenelse{\equal{\titlelinestyle}{partialbg}}{%
+      \subsection{%
+        \texorpdfstring%
+          {\colorbox{bgcolor}{\icon{#2} #1}}% 标题内容部分背景色 无下划线
+          {#1}%
+      }%
+    }{%
+      \ifthenelse{\equal{\titlelinestyle}{fullbg}}{%
+        \subsection{%
+          \texorpdfstring%
+            {\colorbox{bgcolor}{\makebox[\textwidth - 6pt][l]{\icon{#2} #1}}}% 标题整行背景色 无下划线
+            {#1}%
+        }%
+      }{%
+          \PackageError{resume}{Invalid value for titlelinestyle: \titlelinestyle}{}
+      }%
+    }
+  }
+}
+
+% Subsection Title without icon
+\newcommand*{\subsectionTitleNoIcon}[1]{%
+  \ifthenelse{\equal{\titlelinestyle}{default}}{%
+    \subsection{%
+      \texorpdfstring%
+        {\color{black}#1}% 标题黑色 无下划线
+        {#1}%
+    }%
+  }{%
+    \ifthenelse{\equal{\titlelinestyle}{partialbg}}{%
+      \subsection{%
+        \texorpdfstring%
+          {\colorbox{bgcolor}{\color{black}#1}}% 标题内容部分背景色 黑色文字 无下划线
+          {#1}%
+      }%
+    }{%
+      \ifthenelse{\equal{\titlelinestyle}{fullbg}}{%
+        \subsection{%
+          \texorpdfstring%
+            {\colorbox{bgcolor}{\makebox[\textwidth - 6pt][l]{\color{black}#1}}}% 标题整行背景色 黑色文字 无下划线
             {#1}%
         }%
       }{%
@@ -227,7 +288,7 @@
 \newcommand{\basicInfo}[1]{
   % \centerline{\sffamily\large{#1}}
   \centerline{#1}
-  \vspace{1.5ex}
+  \vspace{1.3ex}
 }
 
 \newcommand{\role}[2]{
@@ -238,3 +299,12 @@
 \newcommand{\texthl}[1]{\textcolor{accentcolor}{\textbf{#1}}}
 
 \newcommand{\normalline}[1]{\par #1 \par}
+
+% 项目相关命令
+\newcommand{\projectdesc}[1]{%
+  \par\noindent\textit{#1}\par%
+}
+
+\newcommand{\techstack}[1]{%
+  \par\noindent\textbf{技术栈：}#1\par%
+}
