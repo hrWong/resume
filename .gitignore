@@ -81,3 +81,7 @@ Thumbs.db
 # 备份文件
 *.backup
 *.bak
+
+# 隐私文件
+images/self_photo.jpg
+images/avatar.jpg.backup
