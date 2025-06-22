@@ -4,7 +4,7 @@
 
 ## 效果图
 
-![简历效果图](./images/resume_example.jpg)
+![简历效果图](./images/resume_enhanced.png)
 
 ## 特性
 
